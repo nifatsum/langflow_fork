@@ -1,0 +1,29 @@
+postgresql:
+  enabled: true
+  fullnameOverride: "langflow-ide-postgresql-service"
+  auth:
+    username: "langflow"
+    password: "langflow-postgres"
+    database: "langflow-db"
+
+langflow:
+  backend:
+    externalDatabase:
+      enabled: true
+      driver:
+        value: "postgresql"
+      host:
+        value: "langflow-ide-postgresql-service"
+      port:
+        value: "5432"
+      database:
+        value: "langflow-db"
+      user:
+        value: "langflow"
+      password:
+        valueFrom:
+          secretKeyRef:
+            key: "password"
+            name: "langflow-ide-postgresql-service"
+    sqlite:
+      enabled: false

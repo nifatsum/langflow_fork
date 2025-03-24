@@ -1,0 +1,11 @@
+# for local debuggubg
+FROM langflowai/langflow:1.2.0
+
+COPY src/backend/base/langflow /app/.venv/lib/python3.12/site-packages/langflow
+
+## CMD ["python", "-c", "import time; time.sleep(3600)"]
+CMD ["python", "-m", "langflow", "run", "--host", "0.0.0.0", "--port", "7860"]
+
+# for build call:
+# docker build -f docker_example/Dockerfile2 -t langflow-dev:latest .
+# docker build -f docker_example/Dockerfile2 -t langflow-dev:api-swagger-ext-chat-and-base .

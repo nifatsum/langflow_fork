@@ -1,0 +1,26 @@
+stages:
+  - pipeline
+
+main:
+  stage: pipeline
+  interruptible: true
+  trigger:
+    include: .gitlab/pipeline/main.yml
+    strategy: depend
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+
+schedule:
+  stage: pipeline
+  interruptible: true
+  trigger:
+    include: .gitlab/pipeline/schedule.yml
+    strategy: depend
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
